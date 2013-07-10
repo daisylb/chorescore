@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -8,5 +9,5 @@ class Chore (models.Model):
 
 class ChoreEvent (models.Model):
     chore = models.ForeignKey(Chore)
-    user = models.ForeignKey("django.contrib.auth.models.User")
+    user = models.ForeignKey(User)
     performed_at = models.DateTimeField(auto_now_add=True)
