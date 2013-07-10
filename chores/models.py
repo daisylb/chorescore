@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 class Chore (models.Model):
     name = models.CharField(max_length=256)
     score = models.PositiveSmallIntegerField()
+    def __unicode__(self):
+        return "{}: {}".format(self.score, self.name)
 
 class ChoreEvent (models.Model):
     chore = models.ForeignKey(Chore)
