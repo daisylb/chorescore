@@ -1,4 +1,4 @@
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 DATABASES = {
@@ -12,3 +12,6 @@ DATABASES = {
 	}
 }
 
+# Run the following command to get a new secret key:
+# python -c "import random; print ''.join(chr(random.randint(32,126)) for x in xrange(60))"
+SECRET_KEY = 'I\'m a stupid head because I didn\'t change the secret key'
