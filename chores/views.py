@@ -6,11 +6,15 @@ from django.db.models import Sum
 from django.contrib.auth.models import User
 from .lib import template
 from datetime import datetime, timedelta
+from django.contrib.auth.decorators import login_required
 
 class ChoreList (ListView):
     model = models.Chore
     template_name = "chore_list.html"
 
+chore_list = login_required(ChoreList.as_view())
+
+@login_required
 @template('scoreboard.html')
 def scoreboard(request):
     qs = models.get_scoreboard(14)
@@ -20,6 +24,7 @@ def scoreboard(request):
         'last10': last10,
     }
 
+@login_required
 @template('chore_done.html')
 def mark_chore_done(request, chore_id):
     if request.method != 'POST':
