@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block main %}
+    <h1>Did {{chore_event.chore.name}} for {{chore_event.chore.score}} points!</h1>
+    Here's the {{scoreboard_days}}-day scoreboard as it stands:
+    <ol>
+        {% for entry in scoreboard %}
+            <li{% if entry == request.user %} class='me'{% endif %}>
+                {{entry}} <b>{{entry.score}}</b>
+            </li>
+        {% endfor %}
+    </ol>
+{% endblock %}

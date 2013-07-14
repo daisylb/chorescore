@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block main %}
+    <ul>
+        {% for chore in object_list %}
+            <li>
+            <form method='post' action='{% url 'mark_done' chore.id %}'
+                style='display:inline-block;'>
+                {% csrf_token %}
+                <button type='submit'>Mark Done</button>
+            </form>
+            <b>{{chore.score}}</b> {{chore.name}}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
