@@ -12,7 +12,12 @@ class ChoreList (ListView):
     model = models.Chore
     template_name = "chore_list.html"
 
-chore_list = login_required(ChoreList.as_view())
+@template('login.html')
+def chore_list(request):
+    if request.user.is_authenticated():
+        return ChoreList.as_view()(request)
+    else:
+        return {}
 
 @login_required
 @template('scoreboard.html')

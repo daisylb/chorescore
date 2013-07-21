@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% load browserid %}
+{% block main %}
+    <h1>You're not logged in.</h1>
+    {% browserid_login text='Log In' %}
+{% endblock %}

@@ -1,12 +1,15 @@
+{% load browserid %}
 <!DOCTYPE html>
 <html>
     <head>
         <title>{% block title %}ChoreScore{% endblock %}</title>
     </head>
     <body>
+        {% browserid_info %}
         <div class='nav'>
             <a href='{% url 'chore_list' %}'>Chore List</a>
             <a href='{% url 'scoreboard' %}'>Scoreboard</a>
+            {% browserid_logout text='Log out' %}
         </div>
         {% if messages %}
             <ul class='messages'>
@@ -18,5 +21,7 @@
         {% endif %}
         {% block main %}
         {% endblock %}
+        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        {% browserid_js %}
     </body>
 </html>

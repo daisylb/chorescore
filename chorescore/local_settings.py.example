@@ -15,3 +15,7 @@ DATABASES = {
 # Run the following command to get a new secret key:
 # python -c "import random; print ''.join(chr(random.randint(32,126)) for x in xrange(60))"
 SECRET_KEY = 'I\'m a stupid head because I didn\'t change the secret key'
+
+# Required by django-browserid, you won't be able to log in if you don't change
+# this
+SITE_URL = "https://example.com"
