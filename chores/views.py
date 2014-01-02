@@ -2,7 +2,7 @@ from django.views.generic import ListView
 from . import models
 from django.http import HttpResponseNotAllowed, HttpResponseRedirect
 from django.contrib import messages
-from django.db.models import Sum
+from django.db.models import Sum, Max
 from django.contrib.auth.models import User
 from .lib import template
 from datetime import datetime, timedelta
@@ -12,12 +12,16 @@ class ChoreList (ListView):
     model = models.Chore
     template_name = "chore_list.html"
 
-@template('login.html')
+@template('chore_list.html')
 def chore_list(request):
     if request.user.is_authenticated():
-        return ChoreList.as_view()(request)
+        return {
+            'chores': models.Chore.objects.all().annotate(
+                last_performed=Max('events__performed_at')
+            )
+        }
     else:
-        return {}
+        return {'__template__': 'login.html'}
 
 @login_required
 @template('scoreboard.html')
@@ -50,7 +54,7 @@ def mark_chore_done(request, chore_id):
 
     chore_event = models.ChoreEvent(chore=chore, user=request.user)
     chore_event.save()
-    
+
     return {
         'chore_event': chore_event,
         'scoreboard': models.get_scoreboard(14),

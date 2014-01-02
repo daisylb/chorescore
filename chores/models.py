@@ -28,6 +28,6 @@ class Chore (models.Model):
         return "{}: {}".format(self.score, self.name)
 
 class ChoreEvent (models.Model):
-    chore = models.ForeignKey(Chore)
+    chore = models.ForeignKey(Chore, related_name='events')
     user = models.ForeignKey(User)
     performed_at = models.DateTimeField(auto_now_add=True)
