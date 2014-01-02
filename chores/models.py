@@ -21,9 +21,16 @@ def get_scoreboard(days=None):
 
     return qs
 
+class Category (models.Model):
+    name = models.CharField(max_length=256)
+    def __unicode__(self):
+        return self.name
+
 class Chore (models.Model):
     name = models.CharField(max_length=256)
     score = models.PositiveSmallIntegerField()
+    category = models.ForeignKey(Category, related_name='chores',
+        blank=True, null=True)
     def __unicode__(self):
         return "{}: {}".format(self.score, self.name)
 

@@ -18,7 +18,7 @@ def chore_list(request):
         return {
             'chores': models.Chore.objects.all().annotate(
                 last_performed=Max('events__performed_at')
-            ),
+            ).order_by('category'),
             'scoreboard': models.get_scoreboard(14),
             'last10': models.ChoreEvent.objects.all().order_by('-performed_at')[:10]
         }
