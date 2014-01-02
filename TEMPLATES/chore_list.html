@@ -48,14 +48,14 @@
                         </tr>
                     {% endifchanged %}
                     <tr>
-                        <td><b>{{chore.name}}</b></td>
+                        <td>{{chore.name}}</td>
                         <td>{{chore.score}}</td>
                         <td>{{chore.last_performed}}</td>
                         <td style='text-align: right;'>
                             <form method='post' action='{% url 'mark_done' chore.id %}'
                                 style='display:inline-block;'>
                                 {% csrf_token %}
-                                <button type='submit' class='btn btn-default btn-sm'>Mark Done</button>
+                                <button type='submit' class='btn btn-default btn-sm'>&#x2714;</button>
                             </form>
                         </td>
                     </tr>
