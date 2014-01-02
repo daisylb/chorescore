@@ -180,6 +180,8 @@ LOGOUT_REDIRECT_URL = '/'
 
 BROWSERID_CREATE_USER = False
 
+GRAVATAR_URL_PREFIX = 'https://www.gravatar.com/'
+
 # Local Settings
 try:
   from .local_settings import *
