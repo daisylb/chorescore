@@ -1,37 +1,54 @@
 {% extends "base.html" %}
+{% load gravatar %}
 {% block main %}
     <div class='row'>
         <div class='col-sm-4 col-md-3'>
             <h1>Scoreboard</h1>
             <ol>
                 {% for entry in scoreboard %}
-                    <li> <b>{{entry.score}}</b> {{entry}} </li>
+                    <li> <img src='{% gravatar_for_user entry 80 %}' class='img-circle' width=40 height=40> <b>{{entry.score}}</b> {{entry}} </li>
                 {% endfor %}
             </ol>
-            <h4>Last 10 Chores Done</h4>
-            <ol>
-                {% for entry in last10 %}
-                    <li>
-                        <b>{{entry.chore.name}}</b> by {{entry.user}} for
-                        <b>{{entry.chore.score}}</b> points at {{entry.performed_at}}
-                    </li>
-                {% endfor %}
-            </ol>
+            <div class='hidden-xs'>
+                <h4>Last 10 Chores Done</h4>
+                <ol>
+                    {% for entry in last10 %}
+                        <li>
+                            <b>{{entry.chore.name}}</b> by {{entry.user}} for
+                            <b>{{entry.chore.score}}</b> points at {{entry.performed_at}}
+                        </li>
+                    {% endfor %}
+                </ol>
+            </div>
         </div>
         <div class='col-sm-8 col-md-9'>
             <h1>Chore List</h1>
-            <ul>
+            <table class='table'>
+                <thead>
+                    <tr>
+                        <th>Chore</th>
+                        <th>Score</th>
+                        <th>Last Done</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
                 {% for chore in chores %}
-                    <li>
-                    <form method='post' action='{% url 'mark_done' chore.id %}'
-                        style='display:inline-block;'>
-                        {% csrf_token %}
-                        <button type='submit'>Mark Done</button>
-                    </form>
-                    <b>{{chore.score}}</b> {{chore.name}} (last done {{chore.last_performed}})
-                    </li>
+                    <tr>
+                        <td><b>{{chore.name}}</b></td>
+                        <td>{{chore.score}}</td>
+                        <td>{{chore.last_performed}}</td>
+                        <td style='text-align: right;'>
+                            <form method='post' action='{% url 'mark_done' chore.id %}'
+                                style='display:inline-block;'>
+                                {% csrf_token %}
+                                <button type='submit' class='btn btn-default btn-sm'>Mark Done</button>
+                            </form>
+                        </td>
+                    </tr>
                 {% endfor %}
-            </ul>
+                </tbody>
+            </table>
         </div>
     </div>
 {% endblock %}

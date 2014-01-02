@@ -117,13 +117,14 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'south',
     'django_browserid',
-    
+
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
     'raven.contrib.django.raven_compat',
     'chores',
+    'gravatar',
 )
 
 # A sample logging configuration. The only tangible logging

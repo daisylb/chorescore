@@ -5,3 +5,4 @@ django-model-utils<1.2 # 1.1.x
 django-browserid
 raven
 psycopg2
+django_gravatar
