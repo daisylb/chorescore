@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load gravatar %}
+{% load gravatar humanize %}
 {% block main %}
     <div class='row'>
         <div class='col-sm-4 col-md-3'>
@@ -50,7 +50,7 @@
                     <tr>
                         <td>{{chore.name}}</td>
                         <td>{{chore.score}}</td>
-                        <td>{{chore.last_performed}}</td>
+                        <td>{% if chore.last_performed %}{{chore.last_performed|naturaltime}}{% else %}never{% endif %}</td>
                         <td style='text-align: right;'>
                             <form method='post' action='{% url 'mark_done' chore.id %}'
                                 style='display:inline-block;'>

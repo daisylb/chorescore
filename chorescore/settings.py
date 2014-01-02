@@ -125,6 +125,7 @@ INSTALLED_APPS = (
     'raven.contrib.django.raven_compat',
     'chores',
     'gravatar',
+    'django.contrib.humanize',
 )
 
 # A sample logging configuration. The only tangible logging
