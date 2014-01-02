@@ -4,3 +4,4 @@ django-braces<0.3 # 0.2.x
 django-model-utils<1.2 # 1.1.x
 django-browserid
 raven
+psycopg2
