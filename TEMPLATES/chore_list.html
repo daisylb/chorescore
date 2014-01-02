@@ -1,15 +1,21 @@
 {% extends "base.html" %}
 {% block main %}
-    <ul>
-        {% for chore in object_list %}
-            <li>
-            <form method='post' action='{% url 'mark_done' chore.id %}'
-                style='display:inline-block;'>
-                {% csrf_token %}
-                <button type='submit'>Mark Done</button>
-            </form>
-            <b>{{chore.score}}</b> {{chore.name}}
-            </li>
-        {% endfor %}
-    </ul>
+    <div class='row'>
+        <div class='col-sm-4 col-md-3'>
+        </div>
+        <div class='col-sm-8 col-md-9'>
+            <ul>
+                {% for chore in chores %}
+                    <li>
+                    <form method='post' action='{% url 'mark_done' chore.id %}'
+                        style='display:inline-block;'>
+                        {% csrf_token %}
+                        <button type='submit'>Mark Done</button>
+                    </form>
+                    <b>{{chore.score}}</b> {{chore.name}} (last done {{chore.last_performed}})
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 {% endblock %}

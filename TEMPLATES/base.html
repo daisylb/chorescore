@@ -4,14 +4,16 @@
     <head>
         <title>{% block title %}ChoreScore{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel='stylesheet' type='text/css' href='//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css' />
     </head>
     <body>
         {% browserid_info %}
-        <div class='nav'>
-            <a href='{% url 'chore_list' %}'>Chore List</a>
-            <a href='{% url 'scoreboard' %}'>Scoreboard</a>
-            {% browserid_logout text='Log out' %}
-        </div>
+        <nav class='navbar navbar-default' role='navigation'>
+            <a href='{% url 'chore_list' %}' class='navbar-brand'>ChoreScore</a>
+            <ul class="nav navbar-nav navbar-right">
+                <li>{% browserid_logout text='Log out' %}</li>
+            </ul>
+        </nav>
         {% if messages %}
             <ul class='messages'>
                 {% for message in messages %}
