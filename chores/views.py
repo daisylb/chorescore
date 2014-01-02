@@ -18,20 +18,12 @@ def chore_list(request):
         return {
             'chores': models.Chore.objects.all().annotate(
                 last_performed=Max('events__performed_at')
-            )
+            ),
+            'scoreboard': models.get_scoreboard(14),
+            'last10': models.ChoreEvent.objects.all().order_by('-performed_at')[:10]
         }
     else:
         return {'__template__': 'login.html'}
-
-@login_required
-@template('scoreboard.html')
-def scoreboard(request):
-    qs = models.get_scoreboard(14)
-    last10 = models.ChoreEvent.objects.all().order_by('-performed_at')[:10]
-    return {
-        'scoreboard': qs,
-        'last10': last10,
-    }
 
 @login_required
 @template('chore_done.html')

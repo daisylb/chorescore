@@ -2,8 +2,24 @@
 {% block main %}
     <div class='row'>
         <div class='col-sm-4 col-md-3'>
+            <h1>Scoreboard</h1>
+            <ol>
+                {% for entry in scoreboard %}
+                    <li> <b>{{entry.score}}</b> {{entry}} </li>
+                {% endfor %}
+            </ol>
+            <h4>Last 10 Chores Done</h4>
+            <ol>
+                {% for entry in last10 %}
+                    <li>
+                        <b>{{entry.chore.name}}</b> by {{entry.user}} for
+                        <b>{{entry.chore.score}}</b> points at {{entry.performed_at}}
+                    </li>
+                {% endfor %}
+            </ol>
         </div>
         <div class='col-sm-8 col-md-9'>
+            <h1>Chore List</h1>
             <ul>
                 {% for chore in chores %}
                     <li>
