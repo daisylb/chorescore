@@ -47,7 +47,7 @@
                             </td>
                         </tr>
                     {% endifchanged %}
-                    <tr>
+                    <tr{% if chore.overdue %} class='danger'{% endif %}>
                         <td>{{chore.name}}</td>
                         <td>{{chore.score}}</td>
                         <td>{% if chore.last_performed %}{{chore.last_performed|naturaltime}}{% else %}never{% endif %}</td>
