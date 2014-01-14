@@ -14,7 +14,7 @@ def annotate_chore_set(chore_set):
     chore_set = chore_set.annotate(
         last_performed=Max('events__performed_at')
     ).order_by('category')
-    sprint_start_date = getattr(models.Sprint.get_current(now), 'start_date')
+    sprint_start_date = getattr(models.Sprint.get_current(now), 'start_date', None)
     for chore in chore_set:
         if chore.last_performed:
             chore.last_performed_delta = now - chore.last_performed
