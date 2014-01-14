@@ -48,7 +48,10 @@ class Sprint (models.Model):
 
     @classmethod
     def get_current(cls, date):
-        return cls.objects.get(start_date__lte=date, end_date__gte=date)
+        try:
+            return cls.objects.get(start_date__lte=date, end_date__gte=date)
+        except cls.DoesNotExist:
+            return None
 
     def __unicode__(self):
         return "Sprint from {} to {}".format(self.start_date, self.end_date)
