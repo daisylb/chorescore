@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime, timedelta
-from django.utils.timezone import UTC
 
 def get_scoreboard(days=None):
     """Returns a list of users, annotated with their total score for the given
@@ -35,14 +34,6 @@ class Chore (models.Model):
     max_age = models.PositiveSmallIntegerField(blank=True, null=True)
     reminder = models.BooleanField(default=False)
 
-    @property
-    def last_performed_delta(self):
-        return datetime.now().replace(tzinfo=UTC()) - self.last_performed
-
-    @property
-    def overdue(self):
-        return self.last_performed_delta >= timedelta(days=self.max_age)
-
     def __unicode__(self):
         return "{}: {}".format(self.score, self.name)
 
@@ -50,3 +41,14 @@ class ChoreEvent (models.Model):
     chore = models.ForeignKey(Chore, related_name='events')
     user = models.ForeignKey(User)
     performed_at = models.DateTimeField(auto_now_add=True)
+
+class Sprint (models.Model):
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
+
+    @classmethod
+    def get_current(cls, date):
+        return cls.objects.get(start_date__lte=date, end_date__gte=date)
+
+    def __unicode__(self):
+        return "Sprint from {} to {}".format(self.start_date, self.end_date)

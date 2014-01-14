@@ -7,6 +7,31 @@ from django.contrib.auth.models import User
 from .lib import template
 from datetime import datetime, timedelta
 from django.contrib.auth.decorators import login_required
+from django.utils.timezone import UTC
+
+def annotate_chore_set(chore_set):
+    now = datetime.utcnow().replace(tzinfo=UTC())
+    chore_set = chore_set.annotate(
+        last_performed=Max('events__performed_at')
+    ).order_by('category')
+    sprint_start_date = getattr(models.Sprint.get_current(now), 'start_date')
+    for chore in chore_set:
+        if chore.last_performed:
+            chore.last_performed_delta = now - chore.last_performed
+            if chore.max_age:
+                chore.overdue = (
+                    chore.last_performed_delta >= timedelta(days=chore.max_age))
+            else:
+                chore.overdue = False
+            chore.done_in_sprint = (sprint_start_date and
+                chore.last_performed > sprint_start_date)
+        else:
+            chore.last_performed_delta = None
+            chore.overdue = bool(chore.max_age)
+            chore.done_in_sprint = False
+    return chore_set
+
+
 
 class ChoreList (ListView):
     model = models.Chore
@@ -16,9 +41,7 @@ class ChoreList (ListView):
 def chore_list(request):
     if request.user.is_authenticated():
         return {
-            'chores': models.Chore.objects.all().annotate(
-                last_performed=Max('events__performed_at')
-            ).order_by('category'),
+            'chores': annotate_chore_set(models.Chore.objects.all()),
             'scoreboard': models.get_scoreboard(14),
             'last10': models.ChoreEvent.objects.all().order_by('-performed_at')[:10]
         }
